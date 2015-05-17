@@ -13,6 +13,7 @@ buildscript {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion defaults.compileSdkVersion
@@ -38,4 +39,13 @@ android {
 dependencies {
     compile dep.android_annotations
     compile dep.kotlin_stdlib
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = "sources"
+}
+
+artifacts {
+    archives sourcesJar
 }
