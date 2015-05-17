@@ -1,0 +1,44 @@
+buildscript {
+    ext {
+        ver = [
+            project: "0.1.0",
+
+            android_annotations: "22.1.1",
+            android_appcompat: "22.1.1",
+            android_buildTools: "22.0.1",
+            android_gradle: "1.2.3",
+            gradle_maven: "1.3",
+            kotlin: "0.11.91.4",
+        ]
+
+        defaults = [
+            compileSdkVersion: 22,
+            targetSdkVersion: 22,
+        ]
+
+        plugin = [
+            android_gradle: "com.android.tools.build:gradle:${ver.android_gradle}",
+            kotlin_gradle: "org.jetbrains.kotlin:kotlin-gradle-plugin:${ver.kotlin}",
+            android_maven_gradle: "com.github.dcendents:android-maven-gradle-plugin:${ver.gradle_maven}",
+        ]
+
+        dep = [
+            android_annotations: "com.android.support:support-annotations:${ver.android_annotations}",
+            android_appcompat: "com.android.support:appcompat-v7:${ver.android_appcompat}",
+            kotlin_stdlib: "org.jetbrains.kotlin:kotlin-stdlib:${ver.kotlin}",
+        ]
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath plugin.android_gradle
+        classpath plugin.kotlin_gradle
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
