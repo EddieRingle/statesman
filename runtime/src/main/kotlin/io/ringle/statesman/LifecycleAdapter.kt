@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.annotation.Nullable
 
-public trait LifecycleAdapter : Application.ActivityLifecycleCallbacks {
+public interface LifecycleAdapter : Application.ActivityLifecycleCallbacks {
 
     var target: Activity
 
@@ -18,7 +18,7 @@ public trait LifecycleAdapter : Application.ActivityLifecycleCallbacks {
         ref.getApplication().registerActivityLifecycleCallbacks(this)
     }
 
-    fun onActivityCreated([Nullable] savedInstanceState: Bundle?) {
+    fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
     }
 
     final override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
@@ -54,7 +54,7 @@ public trait LifecycleAdapter : Application.ActivityLifecycleCallbacks {
         }
     }
 
-    fun onActivitySaveInstanceState([NonNull] outState: Bundle) {
+    fun onActivitySaveInstanceState(@NonNull outState: Bundle) {
     }
 
     final override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {

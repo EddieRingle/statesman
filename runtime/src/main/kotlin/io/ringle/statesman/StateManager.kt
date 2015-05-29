@@ -6,7 +6,7 @@ import android.util.SparseArray
 import java.util.ArrayList
 import kotlin.properties.Delegates
 
-public open class StateManager private() : LifecycleAdapter {
+public open class StateManager private constructor() : LifecycleAdapter {
 
     override var target: Activity by Delegates.notNull()
 

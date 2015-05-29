@@ -22,7 +22,7 @@ public abstract class BundleVal<T, out V>() : ReadOnlyProperty<T, V> {
         throw KeyMissingException("Key $desc is missing in $ref")
     }
 
-    [suppress("unchecked_cast")]
+    @suppress("unchecked_cast")
     public override fun get(thisRef: T, desc: PropertyMetadata): V {
         val b = bundle(thisRef)
         val k = key(desc)

@@ -3,7 +3,7 @@ package io.ringle.statesman
 import android.content.Context
 import android.os.Bundle
 
-public trait Stateful : Contextual {
+public interface Stateful : Contextual {
 
     public val key: Int
 
