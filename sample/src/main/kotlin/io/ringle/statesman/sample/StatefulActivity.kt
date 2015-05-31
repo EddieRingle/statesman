@@ -20,7 +20,7 @@ public open class StatefulActivity : Activity(), Stateful {
 
     override val key: Int = 1
 
-    override val ctx: Context = this
+    override var ctx: Context = this
 
     var countObj: Counter? = null
 
@@ -62,7 +62,7 @@ public open class StatefulActivity : Activity(), Stateful {
 
     class Counter(ctx: Context) : Stateful {
 
-        override val ctx = ctx
+        override var ctx = ctx
 
         override val key: Int = 1
 

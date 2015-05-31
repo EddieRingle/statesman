@@ -4,5 +4,5 @@ import android.content.Context
 
 public interface Contextual {
 
-    public val ctx: Context
+    public var ctx: Context
 }
