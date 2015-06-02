@@ -1,12 +1,11 @@
 buildscript {
     ext {
         ver = [
-            project: "0.1.3",
+            project: "0.2.0",
 
-            android_annotations: "22.2.0",
-            android_appcompat: "22.1.1",
             android_buildTools: "22.0.1",
             android_gradle: "1.2.3",
+            android_support: "22.2.0",
             gradle_maven: "1.3",
             kotlin: "0.12.200",
         ]
@@ -23,8 +22,7 @@ buildscript {
         ]
 
         dep = [
-            android_annotations: "com.android.support:support-annotations:${ver.android_annotations}",
-            android_appcompat: "com.android.support:appcompat-v7:${ver.android_appcompat}",
+            android_annotations: "com.android.support:support-annotations:${ver.android_support}",
             kotlin_stdlib: "org.jetbrains.kotlin:kotlin-stdlib:${ver.kotlin}",
         ]
     }

@@ -1,21 +1,19 @@
 package io.ringle.statesman
 
-import android.app.Activity
 import android.os.Bundle
+import android.support.annotation.CallSuper
 import android.util.SparseArray
 import java.util.ArrayList
-import kotlin.properties.Delegates
 
-public open class StateManager private constructor() : LifecycleAdapter {
-
-    override var target: Activity by Delegates.notNull()
-
-    private val managedStates = SparseArray<Bundle>()
+public interface StateHost {
 
     companion object {
 
-        public fun create(): StateManager = StateManager()
+        @suppress("nothing_to_inline")
+        inline fun newManagedStates(): SparseArray<Bundle> = SparseArray()
     }
+
+    val managedStates: SparseArray<Bundle>
 
     public fun deleteState(key: Int) {
         managedStates.delete(key)
@@ -31,7 +29,8 @@ public open class StateManager private constructor() : LifecycleAdapter {
         return state
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    @CallSuper
+    fun restoreState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             val keyList = savedInstanceState.getIntegerArrayList(Statesman.sKeyKeyList)
             if (keyList != null) {
@@ -44,7 +43,8 @@ public open class StateManager private constructor() : LifecycleAdapter {
         }
     }
 
-    override fun onActivitySaveInstanceState(outState: Bundle) {
+    @CallSuper
+    fun saveState(outState: Bundle) {
         val keyList = ArrayList<Int>(managedStates.size())
         for ((k, s) in managedStates) {
             s.remove(Statesman.sKeyNewState)
@@ -52,32 +52,5 @@ public open class StateManager private constructor() : LifecycleAdapter {
             keyList.add(k)
         }
         outState.putIntegerArrayList(Statesman.sKeyKeyList, keyList)
-    }
-}
-
-private class SparseEntry<E>(val k: Int, val v: E) : Map.Entry<Int, E> {
-
-    override fun getKey(): Int = k
-
-    override fun getValue(): E = v
-}
-
-private fun SparseArray<E>.iterator<E>(): MutableIterator<SparseEntry<E>> {
-    return object : MutableIterator<SparseEntry<E>> {
-        var index = 0
-
-        override fun hasNext(): Boolean {
-            return index < size()
-        }
-
-        override fun next(): SparseEntry<E> {
-            val i = index++
-            return SparseEntry(keyAt(i), valueAt(i))
-        }
-
-        override fun remove() {
-            index -= 1
-            removeAt(index)
-        }
     }
 }

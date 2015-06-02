@@ -1,7 +1,6 @@
 package io.ringle.statesman.sample
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -10,27 +9,23 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.LinearLayout.VERTICAL
 import android.widget.TextView
+import io.ringle.statesman.StateHost
 import io.ringle.statesman.Stateful
-import io.ringle.statesman.StatesmanContextWrapper
-import io.ringle.statesman.statesman
+import io.ringle.statesman.Statesman
 import io.ringle.statesman.store
 import kotlin.properties.Delegates
 
 public open class StatefulActivity : Activity(), Stateful {
 
-    override val key: Int = 1
+    override var stateHost: StateHost by Delegates.notNull()
 
-    override var ctx: Context = this
+    override val key: Int = 1
 
     var countObj: Counter? = null
 
     var counter: TextView by Delegates.notNull()
 
     var clicker: TextView by Delegates.notNull()
-
-    override fun attachBaseContext(newBase: Context) {
-        super<Activity>.attachBaseContext(StatesmanContextWrapper(newBase))
-    }
 
     fun createView(): View {
         val container = LinearLayout(this)
@@ -53,16 +48,14 @@ public open class StatefulActivity : Activity(), Stateful {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        statesman.attachTo(this)
         super<Activity>.onCreate(savedInstanceState)
+        stateHost = Statesman.of(this)
         countObj = Counter(this)
         setContentView(createView())
         updateCounterText()
     }
 
-    class Counter(ctx: Context) : Stateful {
-
-        override var ctx = ctx
+    class Counter(override var stateHost: StateHost) : Stateful {
 
         override val key: Int = 1
 

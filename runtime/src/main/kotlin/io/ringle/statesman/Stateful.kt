@@ -1,15 +1,34 @@
 package io.ringle.statesman
 
-import android.content.Context
 import android.os.Bundle
+import android.util.SparseArray
 
-public interface Stateful : Contextual {
+public interface Stateful : StateHost {
 
-    public val key: Int
+    val key: Int
 
-    public val hasState: Boolean
+    val hasState: Boolean
         get() = !state.isNewState()
 
-    public val state: Bundle
-        get() = ctx.statesman.getState(key)
+    val state: Bundle
+        get() = stateHost.getState(key)
+
+    var stateHost: StateHost
+
+    override val managedStates: SparseArray<Bundle>
+        get() = stateHost.managedStates
+
+    override fun deleteState(key: Int) {
+        stateHost.deleteState(key)
+    }
+
+    override fun getState(key: Int): Bundle = stateHost.getState(key)
+
+    override fun restoreState(savedInstanceState: Bundle?) {
+        stateHost.restoreState(savedInstanceState)
+    }
+
+    override fun saveState(outState: Bundle) {
+        stateHost.saveState(outState)
+    }
 }
