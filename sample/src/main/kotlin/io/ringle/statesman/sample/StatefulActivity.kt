@@ -15,7 +15,7 @@ import io.ringle.statesman.Statesman
 import io.ringle.statesman.store
 import kotlin.properties.Delegates
 
-public open class StatefulActivity : Activity(), Stateful {
+open class StatefulActivity : Activity(), Stateful {
 
     override var stateHost: StateHost by Delegates.notNull()
 
@@ -32,23 +32,23 @@ public open class StatefulActivity : Activity(), Stateful {
         counter = TextView(this)
         clicker = Button(this)
         container.setGravity(Gravity.CENTER)
-        container.setOrientation(VERTICAL)
+        container.orientation = VERTICAL
         container.addView(counter, WRAP_CONTENT, WRAP_CONTENT)
         container.addView(clicker, WRAP_CONTENT, WRAP_CONTENT)
         clicker.setOnClickListener {
             countObj!!.count++
             updateCounterText()
         }
-        clicker.setText("Click me!")
+        clicker.text = "Click me!"
         return container
     }
 
     fun updateCounterText() {
-        counter.setText("Clicked ${countObj!!.count} time(s)")
+        counter.text = "Clicked ${countObj!!.count} time(s)"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<Activity>.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         stateHost = Statesman.of(this)
         countObj = Counter(this)
         setContentView(createView())
@@ -59,6 +59,6 @@ public open class StatefulActivity : Activity(), Stateful {
 
         override val key: Int = 1
 
-        public var count: Int by store(0)
+        var count: Int by store(0)
     }
 }

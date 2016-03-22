@@ -4,29 +4,27 @@ import android.os.Bundle
 import android.util.SparseArray
 import kotlin.properties.ReadWriteProperty
 
-public fun bundle<T>(bundle: Bundle,
-                     default: (thisRef: Any?, desc: String) -> T = defaultValueProvider): ReadWriteProperty<Any?, T> {
+fun <T> bundle(bundle: Bundle,
+               default: (thisRef: Any?, desc: String) -> T = defaultValueProvider): ReadWriteProperty<Any?, T> {
     return FixedBundleVar(bundle, defaultKeyProvider, default)
 }
 
-public fun Stateful.store<T>(default: (thisRef: Any?, desc: String) -> T = defaultValueProvider): ReadWriteProperty<Any?, T> {
+fun <T> Stateful.store(default: (thisRef: Any?, desc: String) -> T = defaultValueProvider): ReadWriteProperty<Any?, T> {
     return bundle(state, default)
 }
 
-public fun Stateful.store<T>(default: T): ReadWriteProperty<Any?, T> {
+fun <T> Stateful.store(default: T): ReadWriteProperty<Any?, T> {
     return bundle(state, { r, d -> default })
 }
 
-public fun Bundle.isNewState(): Boolean = getBoolean(Statesman.sKeyNewState)
+fun Bundle.isNewState(): Boolean = getBoolean(Statesman.sKeyNewState)
 
-private class SparseEntry<E>(val k: Int, val v: E) : Map.Entry<Int, E> {
-
-    override fun getKey(): Int = k
-
-    override fun getValue(): E = v
+class SparseEntry<E>(val k: Int, val v: E) : Map.Entry<Int, E> {
+    override val key: Int = k
+    override val value: E = v
 }
 
-private fun SparseArray<E>.iterator<E>(): MutableIterator<SparseEntry<E>> {
+operator fun <E> SparseArray<E>.iterator(): MutableIterator<SparseEntry<E>> {
     return object : MutableIterator<SparseEntry<E>> {
         var index = 0
 

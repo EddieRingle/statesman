@@ -2,7 +2,7 @@ package io.ringle.statesman
 
 import android.content.Context
 
-public interface Contextual {
+interface Contextual {
 
-    public var ctx: Context
+    var ctx: Context
 }

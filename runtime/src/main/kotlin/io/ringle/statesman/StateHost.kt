@@ -3,23 +3,23 @@ package io.ringle.statesman
 import android.os.Bundle
 import android.support.annotation.CallSuper
 import android.util.SparseArray
-import java.util.ArrayList
+import java.util.*
 
-public interface StateHost {
+interface StateHost {
 
     companion object {
 
-        @suppress("nothing_to_inline")
+        @Suppress("nothing_to_inline")
         inline fun newManagedStates(): SparseArray<Bundle> = SparseArray()
     }
 
     val managedStates: SparseArray<Bundle>
 
-    public fun deleteState(key: Int) {
+    fun deleteState(key: Int) {
         managedStates.delete(key)
     }
 
-    public fun getState(key: Int): Bundle {
+    fun getState(key: Int): Bundle {
         var state = managedStates.get(key, null)
         if (state == null) {
             state = Bundle()

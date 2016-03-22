@@ -11,8 +11,8 @@ buildscript {
     ]
     ver = [
         gradleMaven: "1.3",
-        java       : JavaVersion.VERSION_1_8,
-        kotlin     : "0.12.200",
+        java       : JavaVersion.VERSION_1_7,
+        kotlin     : "1.0.1",
     ]
     adep = [
         annotations: "com.android.support:support-annotations:${aver.support}",

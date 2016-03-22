@@ -3,7 +3,7 @@ package io.ringle.statesman
 import android.os.Bundle
 import android.util.SparseArray
 
-public interface Stateful : StateHost {
+interface Stateful : StateHost {
 
     val key: Int
 

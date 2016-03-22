@@ -3,7 +3,7 @@ package io.ringle.statesman
 import android.app.Activity
 import android.content.Context
 
-public interface OfActivity : Contextual {
+interface OfActivity : Contextual {
 
     var activity: Activity
 
