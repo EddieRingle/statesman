@@ -2,28 +2,21 @@ apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
 
 android {
-    compileSdkVersion defaults.compileSdkVersion
-    buildToolsVersion ver.android_buildTools
-
-    defaultConfig {
-        applicationId "io.ringle.statesman.sample"
-        minSdkVersion 16
-        targetSdkVersion defaults.targetSdkVersion
-        versionCode 1
-        versionName "${ver.project}"
+  defaultConfig {
+    applicationId "io.ringle.statesman.sample"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
-    }
-    sourceSets.each { set ->
-        set.java.srcDirs += "src/${set.name}/kotlin"
-    }
+  }
+  sourceSets.each { set ->
+    set.java.srcDirs += "src/${set.name}/kotlin"
+  }
 }
 
 dependencies {
-    compile project(":runtime")
-    compile dep.kotlin_stdlib
+  compile project(":runtime")
+  compile dep.kotlinStdlib
 }

@@ -1,42 +1,64 @@
 buildscript {
-    ext {
-        ver = [
-            project: "0.2.0",
-
-            android_buildTools: "23.0.2",
-            android_gradle: "2.1.0-alpha3",
-            android_support: "23.2.1",
-            gradle_maven: "1.3",
-            kotlin: "0.12.200",
-        ]
-
-        defaults = [
-            compileSdkVersion: 23,
-            targetSdkVersion: 23,
-        ]
-
-        plugin = [
-            android_gradle: "com.android.tools.build:gradle:${ver.android_gradle}",
-            kotlin_gradle: "org.jetbrains.kotlin:kotlin-gradle-plugin:${ver.kotlin}",
-            android_maven_gradle: "com.github.dcendents:android-maven-gradle-plugin:${ver.gradle_maven}",
-        ]
-
-        dep = [
-            android_annotations: "com.android.support:support-annotations:${ver.android_support}",
-            kotlin_stdlib: "org.jetbrains.kotlin:kotlin-stdlib:${ver.kotlin}",
-        ]
+  ext {
+    aver = [
+        app       : "0.2.0",
+        appCode   : 2,
+        buildTools: "23.0.2",
+        compileSdk: 23,
+        minSdk    : 16,
+        plugin    : "2.1.0-alpha3",
+        support   : "23.2.1",
+    ]
+    ver = [
+        gradleMaven: "1.3",
+        java       : JavaVersion.VERSION_1_8,
+        kotlin     : "0.12.200",
+    ]
+    adep = [
+        annotations: "com.android.support:support-annotations:${aver.support}",
+    ]
+    dep = [
+        kotlinStdlib: "org.jetbrains.kotlin:kotlin-stdlib:${ver.kotlin}",
+    ]
+    plug = [
+        android    : "com.android.tools.build:gradle:${aver.plugin}",
+        kotlin     : "org.jetbrains.kotlin:kotlin-gradle-plugin:${ver.kotlin}",
+        mavenGradle: "com.github.dcendents:android-maven-gradle-plugin:${ver.gradleMaven}",
+    ]
+    commonRepos = {
+      jcenter()
     }
-    repositories {
-        jcenter()
+  }
+  repositories.configure commonRepos
+  dependencies {
+    plug.each { n, p ->
+      classpath p
     }
-    dependencies {
-        classpath plugin.android_gradle
-        classpath plugin.kotlin_gradle
-    }
+  }
 }
 
-allprojects {
-    repositories {
-        jcenter()
+subprojects {
+  beforeEvaluate { p ->
+    def androidDefaults = {
+      p.android {
+        buildToolsVersion aver.buildTools
+        compileSdkVersion aver.compileSdk
+
+        defaultConfig {
+          minSdkVersion aver.minSdk
+          targetSdkVersion aver.compileSdk
+          versionCode aver.appCode
+          versionName aver.app
+        }
+
+        compileOptions {
+          sourceCompatibility ver.java
+          targetCompatibility ver.java
+        }
+      }
     }
+    plugins.withId("com.android.application", androidDefaults)
+    plugins.withId("com.android.library", androidDefaults)
+  }
+  repositories.configure commonRepos
 }
