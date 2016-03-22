@@ -1,7 +1,7 @@
 buildscript {
   ext {
     aver = [
-        app       : "0.2.0",
+        app       : "0.3.0",
         appCode   : 2,
         buildTools: "23.0.2",
         compileSdk: 23,

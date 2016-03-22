@@ -1,6 +1,6 @@
 buildscript {
   group = "io.ringle.statesman"
-  version = ver.project
+  version = aver.app
 }
 
 apply plugin: "com.android.library"
