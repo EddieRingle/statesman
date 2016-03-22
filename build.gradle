@@ -3,7 +3,7 @@ buildscript {
         ver = [
             project: "0.2.0",
 
-            android_buildTools: "22.0.1",
+            android_buildTools: "23.0.2",
             android_gradle: "1.2.3",
             android_support: "22.2.0",
             gradle_maven: "1.3",
