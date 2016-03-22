@@ -11,8 +11,8 @@ buildscript {
         ]
 
         defaults = [
-            compileSdkVersion: 22,
-            targetSdkVersion: 22,
+            compileSdkVersion: 23,
+            targetSdkVersion: 23,
         ]
 
         plugin = [
